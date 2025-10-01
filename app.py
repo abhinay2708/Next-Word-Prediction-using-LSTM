@@ -1,12 +1,12 @@
 import streamlit as st
 from tensorflow.keras.models import load_model
-from tensorflow.keras.initializers import Orthogonal 
+# from tensorflow.keras.initializers import Orthogonal 
 import tensorflow as tf
 import numpy as np
 import pickle
 
 # Load model and tokenizer
-model = load_model('nwp.h5', custom_objects={'Orthogonal' : Orthogonal})
+model = load_model('nwp.h5', compile=False)
 with open('tokenizer.pkl', 'rb') as f:
     tokenizer = pickle.load(f)
 vocab_array = np.array(list(tokenizer.word_index.keys()))
@@ -25,3 +25,4 @@ n_words = st.number_input("Number of words to predict:", min_value=1, max_value=
 if st.button("Predict"):
     result = make_prediction(input_text, n_words)
     st.write(result)
+
